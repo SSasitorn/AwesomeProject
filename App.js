@@ -1,42 +1,129 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
+import React, { useState } from "react";
+ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+ 
+ const FlexDirectionBasics = () => {
+ 
+   return (
+    <View style={{ flex:1, flexDirection: "column" }}>
+      <View style={{ flex:1, flexDirection: "row" }}>
+        <View style={{flex:1, backgroundColor: "pink", flexDirection:"row",justifyContent:"flex-start"}}>
+          <View style={{width: 50, height:50, backgroundColor: "white" }}></View>
+        </View>
+        <View style={{flex:1, backgroundColor: "blue", flexDirection:"row" ,justifyContent:"flex-end"}}>
+          <View style={{width: 50, height:50, backgroundColor: "white"}}></View>
+        </View>
+      </View>
 
-import React from 'react';
-import type {Node} from 'react';
-import { SafeAreaView, Text, TextInput }  from 'react-native';
-import {Input,Button ,FAB,Image} from 'react-native-elements'
-import Icon from 'react-native-vector-icon/FontAwesome';
+      <View style={{ flex:1, flexDirection: "row" }}>
+        <View style={{flex:1, backgroundColor: "purple", flexDirection:"column-reverse",justifyContent:"flex-start"}}>
+          <View style={{width: 50, height:50, backgroundColor: "white"}}></View>
+        </View>
+        <View style={{flex:1, backgroundColor: "pink", flexDirection:"column-reverse",justifyContent:"flex-start"}}>
+          <View style={{ backgroundColor: "pink", flexDirection:"row",justifyContent:"flex-end"}}>
+            <View style={{width: 50, height:50, backgroundColor: "white"}}></View>
+          </View>
+        </View>
+      </View>
+    </View>
+   );
+    
+    //  <PreviewLayout
+    //    label="flexDirection"
+    //    values={["column", "row", "row-reverse", "column-reverse"]}
+    //    selectedValue={flexDirection}
+    //    setSelectedValue={setflexDirection}
+    //  >
+    //    <View
+    //      style={[styles.box, { backgroundColor: "powderblue" }]}
+    //    />
+    //    <View
+    //      style={[styles.box, { backgroundColor: "skyblue" }]}
+    //    />
+    //    <View
+    //      style={[styles.box, { backgroundColor: "steelblue" }]}
+    //    />
+    //  </PreviewLayout>
 
-import firestore from '@react-native-friebase/firestore';
-
-
-//สร้าง compoment
-const App:() => Node = () => {
-
-  firestore().collection('users').doc('ABC').get().then(User) => {
-    console.log(user)
-  });
-  
-  return (
-    <SafeAreaView>
-      <Text style = {{fontSize:20}}>Sasiien</Text>
-
-      <Viwe style={{borderwidth:1, padding:10}}>
-      <Input placeholder ='Hint'/>
-      <TextInput style = {{backgroundColor: '#DDDDDD'}}
-      keybordType='email-address'></TextInput>
-
-      <Buttoon title="Outline" type="outline"/>
-       <Button icon={ <Icon name="iconRight" size={30} color='white'/>}
-        
-       title="OK!" />
-      </Viwe>
-    </SafeAreaView>
-  );
-};
-  export default App;
+ };
+ 
+ const PreviewLayout = ({
+   label,
+   children,
+   values,
+   selectedValue,
+   setSelectedValue,
+ }) => (
+   <View style={{ padding: 10, flex: 1 }}>
+     <Text style={styles.label}>{label}</Text>
+     <View style={styles.row}>
+       {values.map((value) => (
+         <TouchableOpacity
+           key={value}
+           onPress={() => setSelectedValue(value)}
+           style={[
+             styles.button,
+             selectedValue === value && styles.selected,
+           ]}
+         >
+           <Text
+             style={[
+               styles.buttonLabel,
+               selectedValue === value && styles.selectedLabel,
+             ]}
+           >
+             {value}
+           </Text>
+         </TouchableOpacity>
+       ))}
+     </View>
+     <View style={[styles.container, { [label]: selectedValue }]}>
+       {children}
+     </View>
+   </View>
+ );
+ 
+ const styles = StyleSheet.create({
+   container: {
+     flex: 1,
+     marginTop: 8,
+     backgroundColor: "aliceblue",
+   },
+   box: {
+     width: 50,
+     height: 50,
+   },
+   row: {
+     flexDirection: "row",
+     flexWrap: "wrap",
+   },
+   button: {
+     paddingHorizontal: 8,
+     paddingVertical: 6,
+     borderRadius: 4,
+     backgroundColor: "oldlace",
+     alignSelf: "flex-start",
+     marginHorizontal: "1%",
+     marginBottom: 6,
+     minWidth: "48%",
+     textAlign: "center",
+   },
+   selected: {
+     backgroundColor: "coral",
+     borderWidth: 0,
+   },
+   buttonLabel: {
+     fontSize: 12,
+     fontWeight: "500",
+     color: "coral",
+   },
+   selectedLabel: {
+     color: "white",
+   },
+   label: {
+     textAlign: "center",
+     marginBottom: 10,
+     fontSize: 24,
+   },
+ });
+ 
+ export default FlexDirectionBasics;
